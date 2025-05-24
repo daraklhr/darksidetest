@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DarkSideTest - Discover Your Hidden Psychological Archetype</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #0e0e0e; color: #f4f4f4; padding: 20px; }
+    h1,h2 { text-align:center; color:#ffe100; }
+    .question { margin:30px 0; }
+    .question button {
+      display:block; margin:5px 0; padding:10px; width:100%; background:#333; color:#fff; border:none; cursor:pointer;
+    }
+    .question button:hover { background:#555; }
+    #result { text-align:center; margin-top:40px; font-size:1.3em; display:none; }
+  </style>
+</head>
+<body>
+  <h1>DarkSideTest</h1>
+  <h2>Discover Your Hidden Psychological Archetype</h2>
+  <div id="quiz"></div>
+  <div id="result"></div>
+  <script>
+    const questions = [
+      { text: "Someone disrespects you. How do you react?", options: [
+        { text:"Stay silent and forget it", type:"empath" },
+        { text:"Smile but mentally destroy them", type:"manipulator" },
+        { text:"Tell them exactly what you think", type:"shadow" },
+        { text:"Ignore. Not worth your time", type:"free" }
+      ]},
+      { text: "What does friendship mean to you?", options: [
+        { text:"Deep support and connection", type:"empath" },
+        { text:"Useful ally in life", type:"manipulator" },
+        { text:"Rare but valuable", type:"shadow" },
+        { text:"Shared experiences", type:"free" }
+      ]},
+      { text: "How do you make important decisions?", options: [
+        { text:"With your gut and emotions", type:"empath" },
+        { text:"Logically and strategically", type:"manipulator" },
+        { text:"After deep analysis", type:"shadow" },
+        { text:"Spontaneously in the moment", type:"free" }
+      ]},
+      { text: "In a group, you are usually...", options: [
+        { text:"Concerned about others", type:"empath" },
+        { text:"Trying to control the dynamic", type:"manipulator" },
+        { text:"Silent but observing", type:"shadow" },
+        { text:"The fun, free spirit", type:"free" }
+      ]},
+      { text: "What matters most in love?", options: [
+        { text:"Real emotion & understanding", type:"empath" },
+        { text:"Power balance", type:"manipulator" },
+        { text:"Intensity & depth", type:"shadow" },
+        { text:"Excitement & freedom", type:"free" }
+      ]},
+      { text: "Have you ever manipulated someone to get what you want?", options: [
+        { text:"No, my conscience won't allow it", type:"empath" },
+        { text:"Yes, if necessary", type:"manipulator" },
+        { text:"Only when truly forced", type:"shadow" },
+        { text:"No, I avoid complications", type:"free" }
+      ]},
+      { text: "What do you think about most?", options: [
+        { text:"Others' emotions", type:"empath" },
+        { text:"Power and control", type:"manipulator" },
+        { text:"Secrets and memories", type:"shadow" },
+        { text:"Adventure and freedom", type:"free" }
+      ]},
+      { text: "If you had a superpower, what would it be?", options: [
+        { text:"Heal emotions", type:"empath" },
+        { text:"Mind control", type:"manipulator" },
+        { text:"See inner darkness", type:"shadow" },
+        { text:"Teleport or fly", type:"free" }
+      ]}
+    ];
+    const results = {
+      shadow: "You are the Shadow Master – deep, intense, mysterious. You see the world through the lens of truth, no matter how dark.",
+      manipulator: "You are the Charming Manipulator – clever, strategic, and magnetic. You influence others without them even noticing.",
+      empath: "You are the Hidden Empath – soft yet strong. You understand others deeply, but keep your boundaries guarded.",
+      free: "You are the Free Spirit – wild, independent, and ever-curious. The world is your playground."
+    };
+    let scores = { shadow:0, manipulator:0, empath:0, free:0 }, current=0;
+    function renderQuestion(){
+      if(current>=questions.length) return showResult();
+      const q=questions[current];
+      document.getElementById("quiz").innerHTML = `<div class="question"><h3>${q.text}</h3>`+
+        q.options.map(o=>`<button onclick="select('${o.type}')">${o.text}</button>`).join("")+`</div>`;
+    }
+    function select(type){ scores[type]++; current++; renderQuestion(); }
+    function showResult(){
+      const key=Object.keys(scores).reduce((a,b)=>scores[a]>scores[b]?a:b);
+      document.getElementById("quiz").style.display="none";
+      document.getElementById("result").style.display="block";
+      document.getElementById("result").innerHTML=`<h2>${results[key]}</h2>`;
+    }
+    renderQuestion();
+  </script>
+</body>
+</html>
